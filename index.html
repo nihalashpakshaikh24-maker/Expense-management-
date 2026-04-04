@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expenses Management | Smart Tracker</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="authContainer" class="auth-overlay">
+        <div class="auth-card" id="loginBox">
+            <h2>Welcome Back</h2>
+            <p class="auth-subtitle">Log in to manage your budget</p>
+            <input type="text" id="loginUser" placeholder="Username">
+            <input type="password" id="loginPass" placeholder="Password">
+            <button onclick="handleLogin()">Sign In</button>
+            <p class="toggle-text">New? <span onclick="toggleAuth()">Create Account</span></p>
+        </div>
+
+        <div class="auth-card" id="registerBox" style="display:none;">
+            <h2>Join Us</h2>
+            <p class="auth-subtitle">SY BCS Mini Project Registration</p>
+            <input type="text" id="regUser" placeholder="Choose Username">
+            <input type="password" id="regPass" placeholder="Choose Password">
+            <button onclick="handleRegister()">Register</button>
+            <p class="toggle-text">Have an account? <span onclick="toggleAuth()">Login</span></p>
+        </div>
+    </div>
+
+    <div id="appContainer" class="app-layout" style="display:none;">
+        <aside class="sidebar">
+            <div class="logo">
+                <span class="icon">📊</span>
+                <h1>EXPENSES MANAGEMENT</h1>
+            </div>
+            
+            <div class="user-profile">
+                <img id="profilePicSide" src="https://ui-avatars.com/api/?name=User&background=6366f1&color=fff" alt="Profile" class="avatar-img">
+                <div>
+                    <p class="greet">Welcome,</p>
+                    <b id="userNameDisplay">Nihal</b>
+                </div>
+            </div>
+
+            <nav class="nav-menu">
+                <button class="nav-item active">Dashboard</button>
+                <button class="nav-item" onclick="openModal('settingsModal')">Settings</button>
+                <button class="nav-item" onclick="openModal('helpModal')">Help</button>
+                <button class="nav-item" onclick="openModal('aboutModal')">About Us</button>
+                <button class="logout-btn" onclick="handleLogout()">Logout</button>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-bar">
+                <h2>Dashboard Overview</h2>
+                <div class="date-display" id="dateTimeDisplay">--:--:--</div>
+            </header>
+
+            <section class="stats-container">
+                <div class="stat-card">
+                    <h3>Total Spent</h3>
+                    <p id="totalDisplay">₹0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Monthly Budget</h3>
+                    <p id="budgetDisplay">₹0</p>
+                    <small id="budgetStatus"></small>
+                </div>
+            </section>
+
+            <section class="dashboard-grid">
+                <div class="content-card">
+                    <h3>New Transaction</h3>
+                    <div class="form-group">
+                        <input type="number" id="amount" placeholder="Amount (₹)">
+                        <input type="text" id="desc" placeholder="Description (e.g. Burger)">
+                        <input type="text" id="category" placeholder="Category (e.g. Food, Travel)">
+                        <button class="add-btn" onclick="addExpense()">Add Expense</button>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <h3>Spending Analysis</h3>
+                    <div class="chart-wrapper">
+                        <canvas id="expenseChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content-card" style="margin-top: 2rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                    <h3>Recent Transactions</h3>
+                    <button class="download-btn" onclick="downloadReceipt()">📥 Download Receipt</button>
+                </div>
+                <ul id="list" class="expense-list"></ul>
+            </section>
+        </main>
+    </div>
+
+    <div id="settingsModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('settingsModal')">&times;</span>
+            <h2>Account Settings</h2>
+            <div class="form-group">
+                <label>Monthly Budget (₹)</label>
+                <input type="number" id="setBudgetInput" placeholder="Enter Amount">
+                <label>Change Email</label>
+                <input type="email" id="setEmailInput" placeholder="Enter New Email">
+                <label>Profile Image URL</label>
+                <input type="text" id="picInput" placeholder="Paste image link here">
+                <button class="add-btn" onclick="saveSettings()">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="helpModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('helpModal')">&times;</span>
+            <h2>Help Guide</h2>
+            <p>• Transactions are recorded with automatic date/time.</p>
+            <p>• Delete any entry using the 🗑️ icon in history.</p>
+            <p>• To add a profile photo, paste a direct image URL in settings.</p>
+            <hr style="margin: 10px 0;">
+            <p>Contact Support: <b>nihalshaikh24@outlook.com</b></p>
+        </div>
+    </div>
+
+    <div id="aboutModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('aboutModal')">&times;</span>
+            <h2>About Project</h2>
+            <p style="margin-bottom: 10px; line-height: 1.6;">
+                This <b>Expenses Management System</b> project is created by <b>SY BCS</b> students as a mini-project for the academic year 2025-26.
+            </p>
+            <p style="margin-bottom: 15px;">Under the guidance of: <b>Aware Madam</b></p>
+            <div class="team-info-box">
+                <p>Lead Developer: <b style="color: #6366f1; font-size: 1.1rem;">NIHAL SHAIKH</b></p>
+                <p>Team Members: <b>Atherv Autade, Yash Shinde</b></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
