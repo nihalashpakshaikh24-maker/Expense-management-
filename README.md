@@ -1,4 +1,5 @@
 # 📊 Personal Expenses Management System
+Hi this is Nihal Shaikh and it's my first project and i have almost no knowledge of coding still i created by using Ai tools.
 
 🌟 Project Overview
 This is a comprehensive desktop application designed to help individuals track, categorize, and manage their daily financial transactions. It provides a clean interface for adding expenses, viewing history, and analyzing spending patterns.
