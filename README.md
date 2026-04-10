@@ -26,5 +26,5 @@ Since I started with zero coding experience, I used a "Co-Pilot" approach:
 1. Clone this repository:
 https://github.com/nihalashpakshaikh24-maker/Expense-management-.git
 
-## 📌 Also Check it out the final out here:
+## 📌 Also Check it out the final output here:
 https://nihalashpakshaikh24-maker.github.io/Expense-management-/
